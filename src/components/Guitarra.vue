@@ -26,7 +26,6 @@ defineEmits(['agregar-carrito'])
             <h3 class="text-black fs-4 fw-bold text-uppercase">
                 {{ guitarra.nombre }}
             </h3>
-            <p>{{ numero }}</p>
             <p>
                 {{ guitarra.descripcion }}
             </p>
