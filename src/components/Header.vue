@@ -17,6 +17,7 @@ defineEmits([
     'decrementar-cantidad',
     'agregar-carrito',
     'eliminar-producto',
+    'vaciar-carrito',
 ])
 
 const totalPagar = computed(() => {
@@ -138,7 +139,10 @@ const totalPagar = computed(() => {
                                 Total pagar:
                                 <span class="fw-bold">${{ totalPagar }}</span>
                             </p>
-                            <button class="btn btn-dark w-100 mt-3 p-2">
+                            <button
+                                class="btn btn-dark w-100 mt-3 p-2"
+                                @click="$emit('vaciar-carrito')"
+                            >
                                 Vaciar Carrito
                             </button>
                         </div>
