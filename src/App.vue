@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { db } from './data/guitarras.js'
 import Guitarra from './components/Guitarra.vue'
 import Header from './components/Header.vue'
@@ -9,10 +9,29 @@ const guitarras = ref([])
 const carrito = ref([])
 const guitarra = ref({})
 
+watch(
+    carrito,
+    () => {
+        guardarLocalStorage()
+    },
+    {
+        deep: true,
+    }
+)
+
 onMounted(() => {
     guitarras.value = db
     guitarra.value = db[0]
+
+    const carritoStorage = localStorage.getItem('carrito')
+    if (carritoStorage) {
+        carrito.value = JSON.parse(carritoStorage)
+    }
 })
+
+const guardarLocalStorage = () => {
+    localStorage.setItem('carrito', JSON.stringify(carrito.value))
+}
 
 const agregarCarrito = (guitarra) => {
     const existeCarrito = carrito.value.findIndex(
@@ -62,6 +81,7 @@ const vaciarCarrito = () => {
         <div class="row mt-5">
             <Guitarra
                 v-for="guitarra in guitarras"
+                :key="guitarra.id"
                 :guitarra="guitarra"
                 @agregar-carrito="agregarCarrito"
             />
